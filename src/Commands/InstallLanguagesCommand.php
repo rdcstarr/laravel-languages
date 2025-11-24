@@ -10,19 +10,32 @@ use function Laravel\Prompts\confirm;
 
 class InstallLanguagesCommand extends Command
 {
+	/**
+	 * The name and signature of the console command.
+	 *
+	 * @var string
+	 */
 	public $signature = 'languages:install
 		{--force : Force the installation without confirmation}';
 
-	public $description = 'Install the languages package';
+	/**
+	 * The console command description.
+	 *
+	 * @var string
+	 */
+	public $description = 'Install the languages package.';
 
-	public function handle(): int
+	/**
+	 * Execute the console command.
+	 */
+	public function handle()
 	{
 		if (!$this->option('force'))
 		{
 			if (!confirm('This will publish migrations, run migrations, and seed the languages table. Do you want to continue?'))
 			{
 				$this->components->warn('Installation cancelled.');
-				return self::FAILURE;
+				return;
 			}
 		}
 
@@ -43,20 +56,18 @@ class InstallLanguagesCommand extends Command
 			catch (Exception $e)
 			{
 				$this->components->error($name . ' failed: ' . $e->getMessage());
-				return self::FAILURE;
+				return;
 			}
 		}
 
 		$this->components->success('Languages Package Installation Completed Successfully!');
-
-		return self::SUCCESS;
 	}
 
 	protected function publishMigrations(): void
 	{
 		Artisan::call('vendor:publish', [
-			'--tag'   => 'laravel-languages-migrations',
-			'--force' => true,
+			'--provider' => 'Rdcstarr\Languages\LanguagesServiceProvider',
+			'--tag'      => 'laravel-languages-migrations',
 		]);
 	}
 
