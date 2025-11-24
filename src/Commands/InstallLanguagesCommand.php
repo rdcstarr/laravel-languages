@@ -10,33 +10,31 @@ use function Laravel\Prompts\confirm;
 
 class InstallLanguagesCommand extends Command
 {
-	public $signature = 'languages:install';
+	public $signature = 'languages:install
+		{--force : Force the installation without confirmation}';
 
-	public $description = 'Install the base languages into the application';
+	public $description = 'Install the languages package';
 
-	/**
-	 * Execute the console command.
-	 */
-	public function handle()
+	public function handle(): int
 	{
 		if (!$this->option('force'))
 		{
-			if (!confirm("This will publish migrations, run migrations, and seed the languages table. Do you want to continue?"))
+			if (!confirm('This will publish migrations, run migrations, and seed the languages table. Do you want to continue?'))
 			{
-				$this->warn('🚫 Multilanguage package installation was canceled.');
-				return;
+				$this->components->warn('Installation cancelled.');
+				return self::FAILURE;
 			}
 		}
 
-		$this->components->info('Starting Multilanguage Package Installation...');
+		$this->components->info('Starting Languages Package Installation...');
 
 		$steps = [
-			'📄 Publishing seeders' => 'publishSeeders',
-			'🏁 Running migrations' => 'runMigrations',
-			'🌱 Seeding languages'  => 'runSeeder',
+			'📄 Publishing migrations' => 'publishMigrations',
+			'🏁 Running migrations'    => 'runMigrations',
+			'🌱 Seeding languages'     => 'runSeeder',
 		];
 
-		collect($steps)->each(function ($method, $name)
+		foreach ($steps as $name => $method)
 		{
 			try
 			{
@@ -45,51 +43,32 @@ class InstallLanguagesCommand extends Command
 			catch (Exception $e)
 			{
 				$this->components->error($name . ' failed: ' . $e->getMessage());
-				exit;
+				return self::FAILURE;
 			}
-		});
+		}
 
-		$this->components->success('Multilanguage Package Installation Completed Successfully!');
+		$this->components->success('Languages Package Installation Completed Successfully!');
+
+		return self::SUCCESS;
 	}
 
-	/**
-	 * Publish the seeders.
-	 *
-	 * @return void
-	 */
-	protected function publishSeeders()
+	protected function publishMigrations(): void
 	{
 		Artisan::call('vendor:publish', [
-			'--provider' => 'Rdcstarr\Languages\LanguagesServiceProvider',
-			'--tag'      => 'seeders',
-			'--force'    => true,
+			'--tag'   => 'laravel-languages-migrations',
+			'--force' => true,
 		]);
 	}
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	protected function runMigrations()
+	protected function runMigrations(): void
 	{
 		Artisan::call('migrate');
 	}
 
-	/**
-	 * Seed the languages table.
-	 *
-	 * @return void
-	 */
-	protected function runSeeder()
+	protected function runSeeder(): void
 	{
-		$publishedSeederClass = 'Database\\Seeders\\LanguagesSeeder';
-		$packageSeederClass   = LanguagesSeeder::class;
-		$publishedSeederPath  = database_path('seeders/LanguagesSeeder.php');
-		$seederClass          = file_exists($publishedSeederPath) ? $publishedSeederClass : $packageSeederClass;
-
 		Artisan::call('db:seed', [
-			'--class' => $seederClass,
+			'--class' => LanguagesSeeder::class,
 		]);
 	}
 }
