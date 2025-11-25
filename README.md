@@ -28,7 +28,7 @@ Alternatively, you can install manually:
 1. Publish the migrations:
 
 ```bash
-php artisan vendor:publish --provider="Rdcstarr\Languages\LanguagesServiceProvider" --tag="laravel-languages-migrations"
+php artisan vendor:publish --tag=languages-migrations
 ```
 
 2. Run the migrations:
