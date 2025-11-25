@@ -63,6 +63,9 @@ class InstallLanguagesCommand extends Command
 		$this->components->success('Languages Package Installation Completed Successfully!');
 	}
 
+	/**
+	 * Publish the migrations.
+	 */
 	protected function publishMigrations(): void
 	{
 		Artisan::call('vendor:publish', [
@@ -71,11 +74,17 @@ class InstallLanguagesCommand extends Command
 		]);
 	}
 
+	/**
+	 * Run the migrations.
+	 */
 	protected function runMigrations(): void
 	{
 		Artisan::call('migrate');
 	}
 
+	/**
+	 * Run the languages seeder.
+	 */
 	protected function runSeeder(): void
 	{
 		Artisan::call('db:seed', [

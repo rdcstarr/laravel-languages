@@ -13,17 +13,34 @@ You can install the package via composer:
 composer require rdcstarr/laravel-languages
 ```
 
-You can publish and run the migrations with:
+### Automatic Installation (Recommended)
 
-```bash
-php artisan vendor:publish --tag="laravel-languages-migrations"
-php artisan migrate
-```
-
-Or run the install command to publish the migrations, run the migrations, and seed the languages table:
+Run the install command to publish the migrations, run the migrations, and seed the languages table:
 
 ```bash
 php artisan languages:install
+```
+
+### Manual Installation
+
+Alternatively, you can install manually:
+
+1. Publish the migrations:
+
+```bash
+php artisan vendor:publish --provider="Rdcstarr\Languages\LanguagesServiceProvider" --tag="laravel-languages-migrations"
+```
+
+2. Run the migrations:
+
+```bash
+php artisan migrate
+```
+
+3. Seed the languages table:
+
+```bash
+php artisan db:seed --class="Rdcstarr\Languages\Database\Seeders\LanguagesSeeder"
 ```
 
 ## 📖 Resources
