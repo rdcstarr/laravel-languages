@@ -53,6 +53,7 @@ class LanguagesSeeder extends Seeder
 				'flag'     => 'us',
 				'timezone' => 'America/New_York',
 				'enabled'  => true,
+				'default'  => true,
 			],
 			[
 				'name'     => 'German',

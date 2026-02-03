@@ -19,6 +19,7 @@ return new class extends Migration
 			$table->string('flag')->nullable();
 			$table->string('timezone')->nullable();
 			$table->boolean('enabled')->default(false);
+			$table->boolean('default')->default(false);
 		});
 	}
 
