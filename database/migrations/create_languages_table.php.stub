@@ -11,13 +11,14 @@ return new class extends Migration
 	 */
 	public function up()
 	{
-	   Schema::create('languages', function (Blueprint $table)
+		Schema::create('languages', function (Blueprint $table)
 		{
 			$table->id();
 			$table->string('name')->unique()->index();
 			$table->string('code', 5)->unique()->index();
 			$table->string('flag')->nullable();
 			$table->string('timezone')->nullable();
+			$table->boolean('enabled')->default(false);
 		});
 	}
 
