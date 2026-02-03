@@ -2,9 +2,10 @@
 
 namespace Rdcstarr\Languages\Models;
 
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
+#[ObservedBy([LanguageObserver::class])]
 class Language extends Model
 {
 	protected $fillable = [
