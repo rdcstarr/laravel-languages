@@ -14,5 +14,10 @@ class Language extends Model
 		'timezone',
 	];
 
+	protected $casts = [
+		'enabled' => 'boolean',
+		'default' => 'boolean',
+	];
+
 	public $timestamps = false;
 }
