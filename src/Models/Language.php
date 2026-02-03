@@ -14,6 +14,8 @@ class Language extends Model
 		'code',
 		'flag',
 		'timezone',
+		'enabled',
+		'default',
 	];
 
 	protected $casts = [
