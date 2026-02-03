@@ -23,6 +23,8 @@ class LanguagesSeeder extends Seeder
 						'name'     => $language['name'],
 						'flag'     => $language['flag'] ?? null,
 						'timezone' => $language['timezone'] ?? null,
+						'enabled'  => $language['enabled'] ?? false,
+						'default'  => $language['default'] ?? false,
 					]
 				);
 			});
