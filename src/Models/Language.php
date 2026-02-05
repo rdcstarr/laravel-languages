@@ -14,6 +14,8 @@ class Language extends Model
 		'name',
 		'code',
 		'flag',
+		'flag_svg',
+		'flag_emoji',
 		'timezone',
 		'enabled',
 		'default',
@@ -58,7 +60,7 @@ class Language extends Model
 		return static::query()
 			->enabled()
 			->pluck('id', 'code')
-			->map(fn ($id) => (int) $id)
+			->map(fn($id) => (int) $id)
 			->toArray();
 	}
 
