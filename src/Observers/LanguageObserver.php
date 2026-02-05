@@ -11,6 +11,9 @@ class LanguageObserver
 {
 	/**
 	 * Handle the Language "created" event.
+	 *
+	 * @param Language $language
+	 * @return void
 	 */
 	public function created(Language $language): void
 	{
@@ -19,13 +22,20 @@ class LanguageObserver
 
 	/**
 	 * Handle the Language "updated" event.
+	 *
+	 * @param Language $language
+	 * @return void
 	 */
 	public function updated(Language $language): void
 	{
 		LanguageUpdated::dispatch($language);
 	}
+
 	/**
 	 * Handle the Language "deleted" event.
+	 *
+	 * @param Language $language
+	 * @return void
 	 */
 	public function deleted(Language $language): void
 	{
