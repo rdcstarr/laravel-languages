@@ -14,7 +14,7 @@ class Language extends Model
 		'name',
 		'code',
 		'flag',
-		'flag_svg',
+		'flag_name',
 		'flag_emoji',
 		'timezone',
 		'enabled',

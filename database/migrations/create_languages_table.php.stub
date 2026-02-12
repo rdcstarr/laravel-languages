@@ -9,7 +9,7 @@ return new class extends Migration
 	/**
 	 * Run the migrations
 	 */
-	public function up()
+	public function up(): void
 	{
 		Schema::create('languages', function (Blueprint $table)
 		{
@@ -17,7 +17,7 @@ return new class extends Migration
 			$table->string('name')->unique()->index();
 			$table->string('code', 5)->unique()->index();
 			$table->string('flag')->nullable();
-			$table->string('flag_svg')->nullable();
+			$table->string('flag_name')->nullable();
 			$table->string('flag_emoji')->nullable();
 			$table->string('timezone')->nullable();
 			$table->boolean('enabled')->default(false);
